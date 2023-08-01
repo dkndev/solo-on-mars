@@ -1,4 +1,5 @@
 {
+  "homepage": "https://dkndev.github.io/solo-on-mars/",
   "name": "nuxt-app",
   "private": true,
   "scripts": {
@@ -8,7 +9,7 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "deploy": "sh deploy.sh",
-    "deploy2": "gh-pages --dotfiles -d .output/public"
+    "deploy2": "gh-pages -d dist -t true"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
