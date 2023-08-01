@@ -7,6 +7,8 @@ yarn generate
 #cd .output/public
 cd dist
 
+touch .nojekyll
+
 git init
 git add -A
 git commit -m "New Deployment"

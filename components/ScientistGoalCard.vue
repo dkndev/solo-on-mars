@@ -40,7 +40,7 @@ const cartTypeMap = ref([
 ])
 
 function getCartType (type) {
-  return cartTypeMap.find(cart => cart.type === type)
+  return cartTypeMap.value.find(cart => cart.type === type)
 }
 
 </script>
