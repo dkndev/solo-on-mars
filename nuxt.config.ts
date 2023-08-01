@@ -2,6 +2,13 @@
 
 export default {
     devtools: {enabled: true},
+    app: {
+        baseURL: '/solo-on-mars/'
+    },
+    target: 'static',
+    router: {
+        base: '/solo-on-mars/'
+    },
     css: [
         'primevue/resources/themes/saga-blue/theme.css',
         'primevue/resources/primevue.css',

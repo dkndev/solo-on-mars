@@ -6,7 +6,9 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "deploy": "sh deploy.sh",
+    "deploy2": "gh-pages --dotfiles -d .output/public"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
@@ -16,6 +18,7 @@
   "dependencies": {
     "@nuxt/webpack-builder": "^3.6.5",
     "@pinia/nuxt": "^0.4.11",
+    "gh-pages": "^5.0.0",
     "pinia": "^2.1.6",
     "primeflex": "^3.3.1",
     "primeicons": "^6.0.1",
