@@ -1,0 +1,9 @@
+body {
+    /*margin: 0;*/
+    max-width: 1000px;
+    margin: auto;
+    /*background-image: url(~/assets/img/OnMarsLogo.png);*/
+    /*background-repeat: no-repeat;*/
+    /*background-position: center;*/
+    background-color: #6f140b;
+}
