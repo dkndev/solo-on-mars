@@ -8,8 +8,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "deploy": "sh deploy.sh",
-    "deploy2": "gh-pages -d dist -t true"
+    "deploy": "sh deploy.sh"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
