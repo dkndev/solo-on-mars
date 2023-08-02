@@ -9,12 +9,15 @@ export default {
     router: {
         base: '/solo-on-mars/'
     },
+    head: {
+        // link: [{rel: 'icon', type: 'image/x-icon', href: 'favicon.ico'}]
+    },
     css: [
         'primevue/resources/themes/saga-blue/theme.css',
         'primevue/resources/primevue.css',
         'primeicons/primeicons.css',
         'primeflex/primeflex.css',
-        '~/assets/css/main.css'
+        '~/assets/css/main.scss'
     ],
     build: {
         transpile: ['primevue']

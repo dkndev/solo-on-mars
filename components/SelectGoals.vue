@@ -23,11 +23,11 @@
       <Panel v-if="showUpgradeGoalCardPanel">
         <div class="flex flex-wrap justify-content-center flex-gap-1">
           <div v-for="card in upgradeGoalCardDeck"
-               class="m-2 card-selector border-round-xl"
+               class="m-1 p-1 card-selector border-round-lg border-2"
                :class="{'border-green-400 b': selectedUpgradeGoalCard.type === card.type}"
                @click="gameStore.selectUpgradeGoalCard(card); showUpgradeGoalCardPanel = false;"
           >
-            <UpgradeGoalCard :type="card.type"/>
+            <Card :type="card.type" :img="require(`~/assets/img/UpgradeGoalCards/${card.type}.png`)"/>
           </div>
         </div>
       </Panel>
@@ -48,16 +48,17 @@
       <Panel v-if="showEarthContactGoalCardPanel">
         <div class="flex flex-wrap justify-content-center flex-gap-1">
           <div v-for="card in earthContactGoalCardDeck"
-               class="m-2 card-selector border-round-xl"
+               class="m-1 p-1 card-selector border-round-lg border-2"
                :class="{'border-green-400 b': selectedEarthContactGoalCard.type === card.type}"
                @click="gameStore.selectEarthContactGoalCard(card); showEarthContactGoalCardPanel = false;"
           >
-            <EarthContractGoalCard :type="card.type"/>
+            <Card :type="card.type" :img="require(`~/assets/img/EarthContractGoalCards/${card.type}.png`)"/>
           </div>
         </div>
       </Panel>
-
     </p>
+
+
     <p>
       <div class="flex justify-content-between">
         <div>
@@ -73,11 +74,11 @@
       <Panel v-if="showTechGoalCardPanel">
         <div class="flex flex-wrap justify-content-center flex-gap-1">
           <div v-for="card in techGoalCardDeck"
-               class="m-2 card-selector border-round-xl"
+               class="m-1 p-1 card-selector border-round-lg border-2"
                :class="{'border-green-400 b': selectedTechGoalCard.type === card.type}"
                @click="gameStore.selectTechGoalCard(card); showTechGoalCardPanel = false;"
           >
-            <TechGoalCard :type="card.type"/>
+            <Card :type="card.type" :img="require(`~/assets/img/TechGoalCards/${card.type}.png`)"/>
           </div>
         </div>
       </Panel>
@@ -98,19 +99,44 @@
       <Panel v-if="showScientistGoalCardPanel">
         <div class="flex flex-wrap justify-content-center flex-gap-1">
           <div v-for="card in scientistGoalCardDeck"
-               class="m-2 card-selector border-round-xl"
+               class="m-1 p-1 card-selector border-round-lg border-2"
                :class="{'border-green-400 b': selectedScientistGoalCard.type === card.type}"
                @click="gameStore.selectScientistGoalCard(card); showScientistGoalCardPanel = false;"
           >
-            <ScientistGoalCard :type="card.type"/>
+            <Card :type="card.type" :img="require(`~/assets/img/ScientistGoalCards/${card.type}.png`)"/>
+          </div>
+        </div>
+      </Panel>
+    </p>
+
+    <p>
+      <div class="flex justify-content-between">
+        <div>
+          Discovery Goal Cards:
+          <template v-if="selectedDiscoveryGoalCard">{{ selectedDiscoveryGoalCard.title }}</template>
+        </div>
+        <div class="">
+          <Button label="Select" class="mr-1" @click="showDiscoveryGoalCardPanel = true"/>
+          <Button label="Choose randomly" @click="gameStore.selectRandomDiscoveryGoalCard"/>
+        </div>
+      </div>
+
+      <Panel v-if="showDiscoveryGoalCardPanel">
+        <div class="flex flex-wrap justify-content-center flex-gap-1">
+          <div v-for="card in discoveryGoalCardDeck"
+               class="m-1 p-1 card-selector border-round-lg border-2"
+               :class="{'border-green-400 b': selectedDiscoveryGoalCard.type === card.type}"
+               @click="gameStore.selectDiscoveryGoalCard(card); showDiscoveryGoalCardPanel = false;"
+          >
+            <Card :type="card.type" :img="require(`~/assets/img/DiscoveryGoalCards/${card.type}.png`)"/>
           </div>
         </div>
       </Panel>
     </p>
 
     <template #footer>
-      <Button label="No" icon="pi pi-times" @click="visible = false" text/>
-      <Button label="Yes" icon="pi pi-check" @click="visible = false" autofocus/>
+      <Button label="Cancel" icon="pi pi-times" @click="cancel" text/>
+      <Button label="Start" icon="pi pi-check" :disabled="!gameStore.canStartGame" @click="gameStore.startGame"/>
     </template>
 
   </Dialog>
@@ -127,6 +153,7 @@ const {
   earthContactGoalCardDeck,
   techGoalCardDeck,
   scientistGoalCardDeck,
+  discoveryGoalCardDeck,
   selectedUpgradeGoalCard,
   selectedEarthContactGoalCard,
   selectedTechGoalCard,
@@ -138,6 +165,12 @@ const showUpgradeGoalCardPanel = ref(false)
 const showEarthContactGoalCardPanel = ref(false)
 const showTechGoalCardPanel = ref(false)
 const showScientistGoalCardPanel = ref(false)
+const showDiscoveryGoalCardPanel = ref(false)
+
+function cancel () {
+  gameStore.hideSelectedGoalCardDialog()
+  gameStore.resetSelectedGoalCards()
+}
 
 </script>
 

@@ -1,126 +1,28 @@
 import { acceptHMRUpdate } from 'pinia'
+import { useStorage } from '@vueuse/core'
 
 export const useGameStore = defineStore({
   id: 'GameStore',
   state: () => {
     return {
-      round: 0,
+      round: useStorage('round', 0),
       sabotageCardDeck: [
-        {
-          type: 'AdvancedBuildingBombed',
-          title: 'ADVANCED BUILDING BOMBED',
-          subtitle: 'GOAL 1: BLUEPRINT',
-          letter: 'A',
-          text: 'THE CONST OT PERFORM THE GOAL-1 UPGRADE IS NOW 2 MINERALS, RATHER THAN 1. <br/> <br/> IF YOU HAVE ALREADY PERFORMED THIS UPGRADE, REMOVE THE ADVANCED BUILDING MARKER FROM BUILDING. YOU WILL NEED TO COMPLETE GOAL-1 AGAIN',
-        },
-        {
-          type: 'HackedTech',
-          title: 'HACKED TECH',
-          subtitle: 'GOAL 3: TECHNOLOGY',
-          letter: 'A',
-          text: 'MOVE YOUR GOAL-3 TECH TILE 1 COLUMN TO THE LEFT. IF IT WAS ALREADY IN THE 1ST COLUMN, RETURN IT TO THE TECH GRID ON THE MAIN BOARD. YOU WILL NEED TO TAKE THE LEARN NEW TECHNOLOGY ACTION TO GET IT AGAIN. <br/> <br/> IF YOU HAVE NOT YET ACQUIRED YOUR GOAL-3 TECH TILE, IGNORE THIS EVENT.',
-        },
-        {
-          type: 'ScienceResourcesMissing',
-          title: 'SCIENCE RESOURCES MISSING',
-          subtitle: 'GOAL 4: SCIENTIST',
-          letter: 'A',
-          text: 'DISCARD THE RESOURCES TO HIRE THE GOAL-4 SCIENTIST. IF GEOLOGIST, MOVE 2 COLONISTS TO WORKING AREA. IF ALREADY HIRED, PEEK AT COST UNDER EARTH CONTRACT CARD AND DISCARD REQUIRED RESOURCES. <br/> <br/> (AS MANY AS YOU HAVE, IF YOU DON\'T HAVE ENOUGH)',
-          extraInfoText: 'DISCARD THE RESOURCES REQUIRED TO HIRE THE GOAL-4 SCIENTIST (OR AS MANY AS YOU HAVE, IF YOU DON\'T HAVE ENOUGH). IF THE GOAL-4 SCIENTIST IS THE GEOLOGIST, MOVE 2 COLONISTS (OR AS MANY AS YOU HAVE, IF YOU DON\'T HAVE ENOUGH) FROM YOUR LIVING QUARTERS TO YOUR WORKING AREA. <br/> <br/> IF YOU HAVE ALREADY HIRED YOUR GOAL-4 SCIENTIST. PEEK AT THE SCIENTIST\'S COST UNDER THE EARTH CONTRACT CARD AND DISCARD THE RESOURCES REQUIRED TO THOSE RESOURCES'
-        },
-        {
-          type: 'ChangeOfPlans',
-          title: 'CHANGE OF PLANS',
-          subtitle: 'GOAL 1: BLUEPRINT',
-          letter: 'A',
-          text: 'GOAL 1 DOES NOT COUNT AS ACHIEVED UNTIL YOU HAVE ALSO UPGRADED A 2ND BUILDING OF THE SAME TYPE (THE 2ND UPGRADE CAN BE OF ANY LEVEL).',
-        },
-        {
-          type: 'AlienAbduction',
-          title: 'ALIEN ABDUCTION',
-          subtitle: 'GENERAL SABOTAGE',
-          letter: 'A',
-          text: 'RETURN 1 COLONIST FROM YOUR WORKING AREA (OR ANYWHERE ELSE, IF YOU HAVE NONE THERE) TO YOUR PERSONAL SUPPLY.',
-        },
-        {
-          type: 'StealthyHarvest',
-          title: 'STEALTHY HARVEST',
-          subtitle: 'GENERAL SABOTAGE',
-          letter: 'A',
-          text: 'DISCARD ALL CRYSTALS FROM THE MARTIAN SURFACE.',
-        },
-        {
-          type: 'ShuttleDelayed',
-          title: 'SHUTTLE DELAYED',
-          subtitle: 'GENERAL SABOTAGE',
-          letter: 'A',
-          text: 'MOVE THE SHUTTLE 1 SPACE BACKWARD. IF IT WAS ALREADY ON SPACE 3, MOVE IT BACK TO AN IMAGINARY SPACE 4.',
-        },
-        {
-          type: 'ReducedEfficiency',
-          title: 'REDUCED EFFICIENCY',
-          subtitle: 'GENERAL SABOTAGE',
-          letter: 'A',
-          text: 'THE NEXT TIME YOU USE AN ACTION SPACE, YOU MUST EITHER SPEND AN ADDITIONAL CRYSTAL OR COMMIT AN ADDITIONAL COLONIST, THEN FLIP THIS CARD FACE DOWN.',
-        },
-        {
-          type: 'CrystalTheft',
-          title: 'CRYSTAL THEFT',
-          subtitle: 'GENERAL SABOTAGE',
-          letter: 'B',
-          text: 'PLACE 2 CRYSTALS FROM YOUR PLAYER BOARD ON THIS CARD. IF YOU DON\'T HAVE ENOUGH, PLACE AS MANY AS YOU HAVE NOW, AND PLACE THE OTHERS IMMEDIATELY WHEN YOU GAIN THEM.',
-        },
-        {
-          type: 'LssSabotage',
-          title: 'LSS SABOTAGE',
-          subtitle: 'GENERAL SABOTAGE',
-          letter: 'B',
-          text: 'THE NEXT TIME YOU ADVANCE AN LSS MARKER TO THE ROW OF THE COLONY LEVEL MARKER, IRNORE THE TWO BENEFITS: INSTEAD, SCORE 0 OP, AND GAIN NO BENEFITS DEPICTED IN THE UPPER-LEFT CORNER OF THE LSS DISPLAY. ONCE YOU HAVE APPLIED THIS EFFECT, FLIP THIS CARD FACE DOWN.',
-        },
-        {
-          type: 'HangerInfiltration',
-          title: 'HANGER INFILTRATION',
-          subtitle: 'GENERAL SABOTAGE',
-          letter: 'B',
-          text: 'FOR EACH SHIP IN YOUR HANGER, PAY 1 WATER OR PLANT (OR AS MANY AS YOU HAVE, IF YOU DON\'T HAVE ENOUGH).',
-        },
-        {
-          type: 'MineExplosion',
-          title: 'MINE EXPLOSION',
-          subtitle: 'GENERAL SABOTAGE',
-          letter: 'B',
-          text: 'FLIP ANY MINE ON THE MARTIAN SURFACE FACE DOWN. MOVE ANY COLONIST ON IT TO YOUR WORKING AREA. THIS TILE IS DEACTIVATED UNTIL YOU REBUILD THE MINE THERE.',
-        },
-        {
-          type: 'DamageToAtmosphericSeal',
-          title: 'DAMAGE TO ATMOSPHERIC SEAL',
-          subtitle: 'GENERAL SABOTAGE',
-          letter: 'B',
-          text: 'FLIP ANY SHELTER ON MARS FACE DOWN. IT\'S DEACTIVATED AND YOUR LIVING QUARTERS REDUCED UNTIL REBUILT. (IGNORE IF ONLY 1 SHELTER). NO NEED TO DISCARD, BUT CAN\'T REFILL UNTIL REBUILT',
-          extraInfoText: 'FLIP ANY SHELTER ON THE MARTIAN SURFACE FACE DOWN. THIS TILE IS DEACTIVATED AND YOUR LIVING QUARTERS ARE REDUCED ACCORDINGLY UNTIL YOU REBUILD THE SHELTER HERE. (IF YOU HAD ONLY 1 SHELTER. IGNORE THIS EVENT.) YOU DO NOT NEED TO DISCARD ANYTHING, BUT YOU CANNOT REFILL THE DEACTIVATED SHELTER UNTIL YOU REBUILD IT.',
-        },
-        {
-          type: 'BotDestroyed',
-          title: 'BOT DESTROYED',
-          subtitle: 'GENERAL SABOTAGE',
-          letter: 'B',
-          text: 'RETURN ONE OF YOUR BOTS FROM THE MARTIAN SURFACE TO YOUR SUPPLY.',
-        },
-        {
-          type: 'RoverDisabled',
-          title: 'ROVER DISABLED',
-          subtitle: 'GENERAL SABOTAGE',
-          letter: 'B',
-          text: 'YOUR ROVER IS INACTIVE FOR 2 ROUNDS.<br/> <br/> PLACE YOUR ROVER ON THIS CARD. REACTIVATE YOUR ROVER AT THE END OF THE NEXT COLONIZATION PHASE. PLACE IT ON THE INITIAL MINE HEX. REACTIVATE AGAIN AT THE END OF THE FOLLOWING COLONIZATION PHASE. PLACE IT ON ANY SHELTER HEX.',
-          extraInfoText: 'YOU CANNOT USE YOUR ROVER FOR THE NEXT 2 ROUNDS. <br/> <br/> MOVE YOUR ROVER TO THIS CARD. AT THE END THE NEXT COLONIZATION PHASE. LAY YOUR ROVER ON ITS SIDE ON THE INITAL MINE HEX. AT THE END OF THE SUBSEQUENT COLONIZATION PHASE, STAND IT BACK UP, READY TO BE USED AGAIN. AT THE END OF THE SUBSEQUENT COLONIZATION PHASE, STAND IT BACK UP ON ANY SHELTER HEX, READY TO BE USED AGAIN.',
-        },
-        {
-          type: 'Misinformation',
-          title: 'MISINFORMATION',
-          subtitle: 'GENERAL SABOTAGE',
-          letter: 'B',
-          text: 'FIND THE MISSION MARKER SITTING ON THE LOWEST NUMBER (I.E. CLOSEST TO COMPLETE) , AND MOVE IT +1 (I.E. 1 SPACE AWAY FROM COMPLETE) IF THERE IS A TIE FOR THE LOWEST NUMBER THIS AFFECTS THE FIRST TIED MISSION IN ALPHABETICAL ORDER (A, B, C).',
-        },
+        {type: 'AdvancedBuildingBombed', title: 'ADVANCED BUILDING BOMBED', letter: 'A', cube1: false, cube2: false, visible: true},
+        {type: 'HackedTech', title: 'HACKED TECH', letter: 'A', cube1: false, cube2: false, visible: true},
+        {type: 'ScienceResourcesMissing', title: 'SCIENCE RESOURCES MISSING', letter: 'A', cube1: false, cube2: false, visible: true},
+        {type: 'ChangeOfPlans', title: 'CHANGE OF PLANS', letter: 'A', cube1: false, cube2: false, visible: true},
+        {type: 'AlienAbduction', title: 'ALIEN ABDUCTION', letter: 'A', cube1: false, cube2: false, visible: true},
+        {type: 'StealthyHarvest', title: 'STEALTHY HARVEST', letter: 'A', cube1: false, cube2: false, visible: true},
+        {type: 'ShuttleDelayed', title: 'SHUTTLE DELAYED', letter: 'A', cube1: false, cube2: false, visible: true},
+        {type: 'ReducedEfficiency', title: 'REDUCED EFFICIENCY', letter: 'A', cube1: false, cube2: false, visible: true},
+        {type: 'CrystalTheft', title: 'CRYSTAL THEFT', letter: 'B', cube1: false, cube2: false, visible: true},
+        {type: 'LssSabotage', title: 'LSS SABOTAGE', letter: 'B', cube1: false, cube2: false, visible: true},
+        {type: 'HangerInfiltration', title: 'HANGER INFILTRATION', letter: 'B', cube1: false, cube2: false, visible: true},
+        {type: 'MineExplosion', title: 'MINE EXPLOSION', letter: 'B', cube1: false, cube2: false, visible: true},
+        {type: 'DamageToAtmosphericSeal', title: 'DAMAGE TO ATMOSPHERIC SEAL', letter: 'B', cube1: false, cube2: false, visible: true},
+        {type: 'BotDestroyed', title: 'BOT DESTROYED', letter: 'B', cube1: false, cube2: false, visible: true},
+        {type: 'RoverDisabled', title: 'ROVER DISABLED', letter: 'B', cube1: false, cube2: false, visible: true},
+        {type: 'Misinformation', title: 'MISINFORMATION', letter: 'B', cube1: false, cube2: false, visible: true},
       ],
       upgradeGoalCardDeck: [
         {type: 'MineralMine', title: 'Mineral Mine'},
@@ -137,18 +39,18 @@ export const useGameStore = defineStore({
         {type: 'CommandCenter', title: 'Command Center'},
       ],
       earthContactGoalCardDeck: [
-        'GeneratorTech',
-        'GreenhouseTech',
-        'MineTech',
-        'WaterExtractorTech',
-        'OxygenCondenserTech',
-        'RoverTech',
-        'ShipTech',
-        'UpgradeTech',
-        'UpgradeTech',
-        'UpgradeTech',
-        'UpgradeTech',
-        'UpgradeTech',
+        {type: 'Complex4Mine', title: 'Complex 4 Mine',},
+        {type: 'Complex4Shelter', title: 'Complex 4 Shelter',},
+        {type: 'Complex4Generator', title: 'Complex 4 Generator',},
+        {type: 'Complex4Greenhouse', title: 'Complex 4 Greenhouse',},
+        {type: 'Complex4OxygenCondenser', title: 'Complex 4 Oxygen Condenser',},
+        {type: 'Complex4WaterExtractor', title: 'Complex 4 Water Extractor',},
+        {type: '3Plants2Minerals', title: '3 Plants & 2 Minerals',},
+        {type: '3Water2Minerals', title: '3 Water & 2 Minerals',},
+        {type: '4Minerals', title: '4 Minerals',},
+        {type: '3Oxygen2Minerals', title: '3 Oxygen & 2 Minerals',},
+        {type: '3Crystals2Minerals', title: '3 Crystals & 2 Minerals',},
+        {type: '3Batteries2Minerals', title: '3 Batteries & 2 Minerals',},
       ],
       techGoalCardDeck: [
         {type: 'GeneratorTech', title: 'Generator'},
@@ -168,22 +70,72 @@ export const useGameStore = defineStore({
         {type: 'R&DEngineer', title: 'The R&D Engineer'},
         {type: 'SystemsEngineer', title: 'The Systems Engineer'},
       ],
-      // discoveryGoalCardDeck
+      discoveryGoalCardDeck: [
+        {type: '3DiscoveryTiles2ResearchTiles', title: '3 Discovery Tiles & 2 Research Tiles',},
+        {type: '4ResearchTiles', title: '4 Research Tiles',},
+        {type: '2DiscoveryTiles3ResearchTiles', title: '2 Discovery Tiles & 3 Research Tiles',},
+        {type: '4DiscoveryTiles1ResearchTiles', title: '4 Discovery Tiles & 1 Research Tiles',},
+      ],
 
-      openSabotageCards: [],
-      selectedUpgradeGoalCard: {type: null, title: ''},
-      selectedEarthContactGoalCard: {type: null, title: ''},
-      selectedTechGoalCard: {type: null, title: ''},
-      selectedScientistGoalCard: {type: null, title: ''},
-      selectedDiscoveryGoalCard: {type: null, title: ''},
+      openSabotageCards: useStorage('openSabotageCards', []),
+      selectedUpgradeGoalCard: useStorage('selectedUpgradeGoalCard', {type: null, title: ''}),
+      selectedEarthContactGoalCard: useStorage('selectedEarthContactGoalCard', {type: null, title: ''}),
+      selectedTechGoalCard: useStorage('selectedTechGoalCard', {type: null, title: ''}),
+      selectedScientistGoalCard: useStorage('selectedScientistGoalCard', {type: null, title: ''}),
+      selectedDiscoveryGoalCard: useStorage('selectedDiscoveryGoalCard', {type: null, title: ''}),
 
       selectedGoalCardDialogVisible: false,
+      gameStarted: useStorage('gameStarted', false),
     }
   },
 
   actions: {
     nextRound () {
       this.round++
+      this.addSabotageCard()
+    },
+    startGame () {
+      this.gameStarted = true
+      this.hideSelectedGoalCardDialog()
+      this.addSabotageCard()
+      this.addSabotageCard()
+    },
+    addSabotageCard () {
+      const unusedCards = this.sabotageCardDeck.filter((card) => {
+        return !this.openSabotageCards.some((usedCard) => usedCard.type === card.type)
+      })
+
+      const newCard = unusedCards[Math.floor(Math.random() * unusedCards.length)]
+
+      this.addSabotageCube(newCard)
+      this.openSabotageCards.push(newCard)
+    },
+    addSabotageCube (newCard) {
+      const openSabotageCardsA = this.openSabotageCards.filter(card => card.letter === 'A')
+      const openSabotageCardsB = this.openSabotageCards.filter(card => card.letter === 'B')
+
+      if (newCard.letter === 'A') {
+        if (openSabotageCardsA.length) {
+          const card = openSabotageCardsA.filter(card => this.sabotageCardHasSpaceForCube(card))[0]
+          if (card.cube1 === false) {
+            card.cube1 = true
+          } else {
+            card.cube2 = true
+          }
+        }
+      } else {
+        if (openSabotageCardsB.length) {
+          const card = openSabotageCardsB.filter(card => this.sabotageCardHasSpaceForCube(card))[0]
+          if (card.cube1 === false) {
+            card.cube1 = true
+          } else {
+            card.cube2 = true
+          }
+        }
+      }
+    },
+    sabotageCardHasSpaceForCube (card) {
+      return !(card.cube1 && card.cube2)
     },
     selectUpgradeGoalCard (card) {
       this.selectedUpgradeGoalCard = card
@@ -220,10 +172,37 @@ export const useGameStore = defineStore({
     },
     hideSelectedGoalCardDialog () {
       this.selectedGoalCardDialogVisible = false
+    },
+    resetSelectedGoalCards () {
+      // this.selectedUpgradeGoalCard = {type: null, title: ''}
+      // this.selectedEarthContactGoalCard = {type: null, title: ''}
+      // this.selectedTechGoalCard = {type: null, title: ''}
+      // this.selectedScientistGoalCard = {type: null, title: ''}
+      // this.selectedDiscoveryGoalCard = {type: null, title: ''}
+    },
+    resetGame () {
+      this.resetSelectedGoalCards()
+      this.round = 0
+      this.gameStarted = false
+      this.openSabotageCards = []
     }
   },
 
-  getters: {}
+  getters: {
+    canStartGame: (state) => {
+      return state.selectedUpgradeGoalCard.type !== null &&
+        state.selectedEarthContactGoalCard.type !== null &&
+        state.selectedTechGoalCard.type !== null &&
+        state.selectedScientistGoalCard.type !== null &&
+        state.selectedDiscoveryGoalCard.type !== null
+    },
+    openSabotageCardsA: (state) => {
+      return state.openSabotageCards.filter(card => card.letter === 'A')
+    },
+    openSabotageCardsB: (state) => {
+      return state.openSabotageCards.filter(card => card.letter === 'B')
+    }
+  }
 
 })
 

@@ -1,0 +1,17 @@
+body {
+  /*margin: 0;*/
+  max-width: 1600px;
+  min-width: 650px;
+  margin: auto;
+  padding: 0 10px;
+  background-color: #6f140b;
+
+  #__nuxt {
+    height: calc(100vh);
+
+    background-image: url('@/assets/img/onMarsBackground.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: right;
+  }
+}
