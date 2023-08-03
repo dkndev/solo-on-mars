@@ -10,33 +10,11 @@
 </template>
 
 <script setup>
-const emit = defineEmits(['alienAttack'])
 const props = defineProps({
   round: Number,
 })
 
 const {round} = toRefs(props)
-
-const backgroundUrl = ref('~/assets/img/TimeTrack.png')
-
-const spaces = ref([
-  false,
-  false,
-  false,
-  true,
-  false,
-  true,
-  false,
-  true,
-  false,
-  true,
-  false,
-  true,
-  false,
-  true,
-  false,
-  false,
-])
 
 const topPosition = computed(() => {
   if (round.value < 8) {
@@ -53,13 +31,6 @@ const leftPosition = computed(() => {
   ]
 
   return pos[round.value]
-})
-
-watch(round, async () => {
-  console.log(spaces.value[round.value])
-  if (spaces.value[round.value]) {
-    emit('alienAttack', spaces.value[round.value])
-  }
 })
 
 </script>

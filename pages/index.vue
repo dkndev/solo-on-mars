@@ -3,38 +3,24 @@
     <SelectGoals/>
 
     <div class="w-full flex justify-content-center">
-      <TimeTrack v-if="gameStarted" :round="round" class="m-auto" @alien-attack="console.log('test')"/>
+      <TimeTrack v-if="gameStarted" :round="round" class="m-auto"/>
     </div>
 
-    <div class="mt-2">
-      <div class="flex flex-wrap">
-        <SabotageCard2
-          v-for="card in gameStore.openSabotageCardsA"
-          :img="require(`~/assets/img/SabotageCards/${card.type}.png`)"
-          :cube1="card.cube1"
-          :cube2="card.cube2"
-        />
-      </div>
+    <SabotageDetail/>
+    <PreviousSabotage/>
+    <CurrentSabotage/>
 
-      <div class="flex flex-wrap">
-        <SabotageCard2
-          v-for="card in gameStore.openSabotageCardsB"
-          :img="require(`~/assets/img/SabotageCards/${card.type}.png`)"
-          :cube1="card.cube1"
-          :cube2="card.cube2"
-        />
-      </div>
-    </div>
+    <SabotageCardDisplay/>
 
     <div class="absolute top-50 left-50 " v-if="!gameStarted">
-      <Button label="Start Game" icon="pi pi-play" @click="gameStore.showSelectedGoalCardDialog()"/>
+      <Button label="Start Game" icon="pi pi-play" class="bg-teal-300" size="large" @click="gameStore.showSelectedGoalCardDialog()"/>
     </div>
 
     <div v-if="gameStarted" class="flex justify-content-between absolute bottom-0 w-full">
       <GameReset/>
-      <div>
-        <Button label="Next Round" icon="pi pi-play" @click="gameStore.nextRound()"/>
-      </div>
+      <Button label="Previous Sabotage" icon="pi pi-arrow-up" class="bg-teal-300" size="large" @click="previousSabotageDialogVisible = true"/>
+      <Button label="Current Sabotage" icon="pi pi-arrow-up" class="bg-teal-300" size="large" :disabled="!gameStore.isAlienAttack" @click="currentSabotageDialogVisible = true"/>
+      <Button label="Next Round" icon="pi pi-play" class="bg-teal-300" size="large" @click="gameStore.nextRound()"/>
     </div>
   </div>
 
@@ -45,10 +31,16 @@ import {useGameStore} from '@/stores/gameStore'
 import {storeToRefs} from "pinia";
 
 const gameStore = useGameStore()
-const {openSabotageCards, round, gameStarted} = storeToRefs(gameStore)
+const {
+  currentSabotageDialogVisible,
+  previousSabotageDialogVisible,
+  round,
+  gameStarted
+} = storeToRefs(gameStore)
 
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+
 
 </style>

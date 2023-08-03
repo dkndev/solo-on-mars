@@ -7,22 +7,22 @@ export const useGameStore = defineStore({
     return {
       round: useStorage('round', 0),
       sabotageCardDeck: [
-        {type: 'AdvancedBuildingBombed', title: 'ADVANCED BUILDING BOMBED', letter: 'A', cube1: false, cube2: false, visible: true},
-        {type: 'HackedTech', title: 'HACKED TECH', letter: 'A', cube1: false, cube2: false, visible: true},
-        {type: 'ScienceResourcesMissing', title: 'SCIENCE RESOURCES MISSING', letter: 'A', cube1: false, cube2: false, visible: true},
-        {type: 'ChangeOfPlans', title: 'CHANGE OF PLANS', letter: 'A', cube1: false, cube2: false, visible: true},
-        {type: 'AlienAbduction', title: 'ALIEN ABDUCTION', letter: 'A', cube1: false, cube2: false, visible: true},
-        {type: 'StealthyHarvest', title: 'STEALTHY HARVEST', letter: 'A', cube1: false, cube2: false, visible: true},
-        {type: 'ShuttleDelayed', title: 'SHUTTLE DELAYED', letter: 'A', cube1: false, cube2: false, visible: true},
-        {type: 'ReducedEfficiency', title: 'REDUCED EFFICIENCY', letter: 'A', cube1: false, cube2: false, visible: true},
-        {type: 'CrystalTheft', title: 'CRYSTAL THEFT', letter: 'B', cube1: false, cube2: false, visible: true},
-        {type: 'LssSabotage', title: 'LSS SABOTAGE', letter: 'B', cube1: false, cube2: false, visible: true},
-        {type: 'HangerInfiltration', title: 'HANGER INFILTRATION', letter: 'B', cube1: false, cube2: false, visible: true},
-        {type: 'MineExplosion', title: 'MINE EXPLOSION', letter: 'B', cube1: false, cube2: false, visible: true},
-        {type: 'DamageToAtmosphericSeal', title: 'DAMAGE TO ATMOSPHERIC SEAL', letter: 'B', cube1: false, cube2: false, visible: true},
-        {type: 'BotDestroyed', title: 'BOT DESTROYED', letter: 'B', cube1: false, cube2: false, visible: true},
-        {type: 'RoverDisabled', title: 'ROVER DISABLED', letter: 'B', cube1: false, cube2: false, visible: true},
-        {type: 'Misinformation', title: 'MISINFORMATION', letter: 'B', cube1: false, cube2: false, visible: true},
+        {type: 'AdvancedBuildingBombed', title: 'ADVANCED BUILDING BOMBED', letter: 'A', cube1: false, cube2: false, usedInRound: null},
+        {type: 'HackedTech', title: 'HACKED TECH', letter: 'A', cube1: false, cube2: false, usedInRound: null},
+        {type: 'ScienceResourcesMissing', title: 'SCIENCE RESOURCES MISSING', letter: 'A', cube1: false, cube2: false, usedInRound: null},
+        {type: 'ChangeOfPlans', title: 'CHANGE OF PLANS', letter: 'A', cube1: false, cube2: false, usedInRound: null},
+        {type: 'AlienAbduction', title: 'ALIEN ABDUCTION', letter: 'A', cube1: false, cube2: false, usedInRound: null},
+        {type: 'StealthyHarvest', title: 'STEALTHY HARVEST', letter: 'A', cube1: false, cube2: false, usedInRound: null},
+        {type: 'ShuttleDelayed', title: 'SHUTTLE DELAYED', letter: 'A', cube1: false, cube2: false, usedInRound: null},
+        {type: 'ReducedEfficiency', title: 'REDUCED EFFICIENCY', letter: 'A', cube1: false, cube2: false, usedInRound: null},
+        {type: 'CrystalTheft', title: 'CRYSTAL THEFT', letter: 'B', cube1: false, cube2: false, usedInRound: null},
+        {type: 'LssSabotage', title: 'LSS SABOTAGE', letter: 'B', cube1: false, cube2: false, usedInRound: null},
+        {type: 'HangerInfiltration', title: 'HANGER INFILTRATION', letter: 'B', cube1: false, cube2: false, usedInRound: null},
+        {type: 'MineExplosion', title: 'MINE EXPLOSION', letter: 'B', cube1: false, cube2: false, usedInRound: null},
+        {type: 'DamageToAtmosphericSeal', title: 'DAMAGE TO ATMOSPHERIC SEAL', letter: 'B', cube1: false, cube2: false, usedInRound: null},
+        {type: 'BotDestroyed', title: 'BOT DESTROYED', letter: 'B', cube1: false, cube2: false, usedInRound: null},
+        {type: 'RoverDisabled', title: 'ROVER DISABLED', letter: 'B', cube1: false, cube2: false, usedInRound: null},
+        {type: 'Misinformation', title: 'MISINFORMATION', letter: 'B', cube1: false, cube2: false, usedInRound: null},
       ],
       upgradeGoalCardDeck: [
         {type: 'MineralMine', title: 'Mineral Mine'},
@@ -85,13 +85,29 @@ export const useGameStore = defineStore({
       selectedDiscoveryGoalCard: useStorage('selectedDiscoveryGoalCard', {type: null, title: ''}),
 
       selectedGoalCardDialogVisible: false,
+      currentSabotageDialogVisible: false,
+      previousSabotageDialogVisible: false,
+      sabotageDetailDialogVisible: false,
+      sabotageDetailCard: null,
       gameStarted: useStorage('gameStarted', false),
+      gameEnded: useStorage('gameEnded', false),
     }
   },
 
   actions: {
     nextRound () {
+      if (this.gameEnded){
+        return
+      }
+
       this.round++
+      if (this.round === 15){
+        this.gameEnded = true
+        return
+      }
+      if (this.isAlienAttack) {
+        this.checkAlienAttack()
+      }
       this.addSabotageCard()
     },
     startGame () {
@@ -134,6 +150,15 @@ export const useGameStore = defineStore({
         }
       }
     },
+    checkAlienAttack () {
+      const activeCards = this.openSabotageCards.filter(card => card.cube1 && card.cube2 && card.usedInRound === null)
+      activeCards.forEach(card => {
+        card.usedInRound = this.round
+      })
+      if (activeCards.length) {
+        this.currentSabotageDialogVisible = true
+      }
+    },
     sabotageCardHasSpaceForCube (card) {
       return !(card.cube1 && card.cube2)
     },
@@ -173,6 +198,11 @@ export const useGameStore = defineStore({
     hideSelectedGoalCardDialog () {
       this.selectedGoalCardDialogVisible = false
     },
+    showSabotageDetailDialog (cardType) {
+      this.sabotageDetailDialogVisible = true
+      console.log(cardType)
+      this.sabotageDetailCard = this.sabotageCardDeck.find(card => card.type === cardType)
+    },
     resetSelectedGoalCards () {
       // this.selectedUpgradeGoalCard = {type: null, title: ''}
       // this.selectedEarthContactGoalCard = {type: null, title: ''}
@@ -184,6 +214,7 @@ export const useGameStore = defineStore({
       this.resetSelectedGoalCards()
       this.round = 0
       this.gameStarted = false
+      this.gameEnded = false
       this.openSabotageCards = []
     }
   },
@@ -201,7 +232,12 @@ export const useGameStore = defineStore({
     },
     openSabotageCardsB: (state) => {
       return state.openSabotageCards.filter(card => card.letter === 'B')
-    }
+    },
+    isAlienAttack: (state) => {
+      const a = [false, false, false, true, false, true, false, true, false, true, false, true, false, true, false, false]
+
+      return a[state.round]
+    },
   }
 
 })

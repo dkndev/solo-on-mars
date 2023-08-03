@@ -15,3 +15,6 @@ git commit -m "New Deployment"
 git push -f git@github.com:dkndev/solo-on-mars.git main:gh-pages
 
 cd -
+
+rm -rf .output
+rm -rf dist

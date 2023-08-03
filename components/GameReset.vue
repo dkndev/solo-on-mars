@@ -1,5 +1,5 @@
 <template>
-  <Button label="Reset Game" icon="pi pi-refresh" @click="confirmResetGame"/>
+  <Button label="Reset Game" icon="pi pi-refresh" class="bg-teal-300" size="large" @click="confirmResetGame"/>
   <ConfirmDialog/>
 </template>
 
