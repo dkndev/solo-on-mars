@@ -1,0 +1,5 @@
+div.card[data-v-ed8de4e8]{margin:0 5px;position:relative;width:250px}div.card .check-mark[data-v-ed8de4e8]{position:absolute;right:10px;top:90px;z-index:1}
+.card-selector[data-v-8fca30c8]{border:1px solid transparent}.card-selector[data-v-8fca30c8]:hover{border:1px solid #000;cursor:pointer}
+.time-track[data-v-10c7eedf]{display:inline-block;max-width:820px;min-width:650px;position:relative}.time-track .hourglass[data-v-10c7eedf]{background-color:red;max-width:8%;padding:10px;position:absolute;z-index:1}
+div.card[data-v-3ccc2042]{margin:0 5px;position:relative;width:250px}div.card .cube[data-v-3ccc2042]{background-color:#61beb5;box-shadow:5px 3px 4px rgba(0,0,0,.4),1px 3px 4px rgba(0,0,0,.4);height:41px;padding:10px;position:absolute;width:41px;z-index:1}
+.card-display-wrapper[data-v-52618f32]{margin-top:5px}.card-display-wrapper .card-display[data-v-52618f32]{margin:0 auto;overflow:auto;white-space:nowrap;width:calc(100% - 10px)}.card-display-wrapper .card-display[data-v-52618f32]::-webkit-scrollbar{display:none}
